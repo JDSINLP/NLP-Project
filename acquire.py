@@ -15,6 +15,7 @@ import pandas as pd
 import numpy as np
 import re
 import requests
+import time
 
 # TODO: Make a github personal access token.
 #     1. Go here and generate a personal access token: https://github.com/settings/tokens
@@ -29,7 +30,9 @@ def web_scrape_repos():
 
     REPOS = []
     
-    for page in range(1, 20):
+    for page in range(1, 30):
+        
+        time.sleep(5)
 
         req = requests.get(search_topics + str(page) + "&q=" + 'bitcoin' + "&type=Repositories")
         soup = BeautifulSoup(req.text, 'html.parser')
@@ -135,16 +138,6 @@ if __name__ == "__main__":
     json.dump(data, open("data2.json", "w"), indent=1)
 
 
-# In[ ]:
-
-
-
-
-
-# In[33]:
-
-
-scrape_github_data()
 
 
 # In[ ]:

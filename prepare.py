@@ -356,3 +356,18 @@ def remove_stopwords(string, extra_words=[], exclude_words=[]):
     string_with_stopwords_removed = [word for word in string if word not in stopwords_english]
     
     return ' '.join(string_with_stopwords_removed)
+
+def clean_text(text, extra_stopwords=['r', 'u', '2', 'ltgt']):
+    
+    wnl = nltk.stem.WordNetLemmatizer()
+    
+    stopwords = nltk.corpus.stopwords.words('english') + extra_stopwords
+    
+    clean_text = (unicodedata.normalize('NFKD', text)
+                   .encode('ascii', 'ignore')
+                   .decode('utf-8', 'ignore')
+                   .lower())
+    
+    words = re.sub(r'[^\w\s]', '', clean_text).split()
+    
+    return [wnl.lemmatize(word) for word in words if word not in stopwords]
