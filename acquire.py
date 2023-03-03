@@ -120,12 +120,31 @@ def scrape_github_data() -> List[Dict[str, str]]:
     """
     Loop through all of the repos and process them. Returns the processed data.
     """
+    lst = []
+    total = len(REPOS)
+    for repo in REPOS:
+        total -= 1
+        lst.append(process_repo(repo))
+        # print(total)
+    return lst
     return [process_repo(repo) for repo in REPOS]
 
 
 if __name__ == "__main__":
     data = scrape_github_data()
-    json.dump(data, open("data.json", "w"), indent=1)
+    json.dump(data, open("data2.json", "w"), indent=1)
+
+
+# In[ ]:
+
+
+
+
+
+# In[33]:
+
+
+scrape_github_data()
 
 
 # In[ ]:
