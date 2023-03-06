@@ -26,8 +26,6 @@ from sklearn.linear_model import LogisticRegression
 from sklearn.ensemble import RandomForestClassifier
 
 
-
-
 def train_val_test(df, target=None, stratify=None, seed=42):
     
     '''Split data into train, validate, and test subsets with 60/20/20 ratio'''
@@ -39,8 +37,6 @@ def train_val_test(df, target=None, stratify=None, seed=42):
     return train, val, test
 
 
-
-
 def get_tfid(X_train, X_val, X_test, y_train, y_val, y_test):
     
     tfidf = TfidfVectorizer()
@@ -48,9 +44,6 @@ def get_tfid(X_train, X_val, X_test, y_train, y_val, y_test):
     X_val_tfid = tfidf.transform(X_val)
     X_test_tfid = tfidf.transform(X_test)
     return X_train_tfid, X_val_tfid, X_test_tfid
-
-
-
 
 
 def get_baseline_accuracy( y_train):
@@ -67,8 +60,6 @@ def get_baseline_accuracy( y_train):
     
     # print baseline accuracy
     print(f"Baseline accuracy: {round(baseline_accuracy, 2) * 100} %")
-
-
 
 
 def decision_tree(x_trains, x_validates, y_train, y_validate):
@@ -108,60 +99,6 @@ def decision_tree(x_trains, x_validates, y_train, y_validate):
     return df
 
 
-
-
-def get_decision_tree(x_trains, x_validates, y_train, y_validate, n):
-    '''get decision tree accuracy score on train and validate data'''
-    
-    # create model
-    clf = DecisionTreeClassifier(max_depth = n, random_state=42)
-
-    # fit the model to train data
-    clf.fit(x_trains, y_train)
-
-    # compute accuracy
-    train_acc = clf.score(x_trains, y_train)
-    validate_acc = clf.score(x_validates, y_validate)
-
-    return train_acc, validate_acc
-
-
-
-
-def get_random_forest(x_trains, x_validates, y_train, y_validate, n):
-    '''get random forest accuracy score on train and validate data'''
-    
-    # create model
-    rf= RandomForestClassifier(min_samples_leaf = n, random_state=42) 
-
-    # fit the model to train data
-    rf.fit(x_trains, y_train)
-
-    # compute accuracy
-    train_acc = rf.score(x_trains, y_train)
-    validate_acc = rf.score(x_validates, y_validate)
-
-    return train_acc, validate_acc
-
-
-
-def get_logistic_regression(x_trains, x_validates, y_train, y_validate, n):
-    '''get logistic regrssion accuracy score on train and validate data'''
-    
-    # create model
-    logit = LogisticRegression(C = n, random_state=42, solver='liblinear')
-
-    # fit the model to train data
-    logit.fit(x_trains, y_train)
-
-    # compute accuracy
-    train_acc = logit.score(x_trains, y_train)
-    validate_acc = logit.score(x_validates, y_validate)
-    
-    return train_acc, validate_acc
-
-
-
 def random_forest_tree(x_trains, x_validates, y_train, y_validate):
     '''takes in x_train, x_validate, y_train, y_validate dataframes
      and returns a dataframe with accuracy score on train and validate data and the accuracy difference ''' 
@@ -199,48 +136,89 @@ def random_forest_tree(x_trains, x_validates, y_train, y_validate):
     return df
 
 
-
-
-
-def logistic_regression(x_trains, x_validates, y_train, y_validate):
-    # using Logistic regression model with different values of hyperparameter c to find best model
-
+def knn(x_trains, x_validates, y_train, y_validate):
+    '''takes in x_train, x_validate, y_train, y_validate dataframes
+    and returns a dataframe with accuracy score on train and validate dataand the accuracy difference ''' 
+    
     # create an empty list to append output
     metrics = []
+    
+    for i in range(1,15):
 
-    # create model1 of logistic regression
-    logit1 = LogisticRegression(C = 1, random_state=42, solver='liblinear')
-    logit2 = LogisticRegression(C = 0.1, random_state=42, solver='liblinear')
-
-    cols = [logit1, logit2]
-
-    for col in cols : 
-
-        # fit model
-        col.fit(x_trains, y_train)
+        # create model
+        knn = KNeighborsClassifier(n_neighbors=i) 
 
         # fit the model to training data
-        col.fit(x_trains, y_train)
+        knn.fit(x_trains, y_train)
 
         # accuracy score on train
-        accuracy_train = col.score(x_trains,y_train)
+        accuracy_train = knn.score(x_trains,y_train)
 
         # accuracy score on validate
-        accuracy_validate =col.score(x_validates,y_validate)
+        accuracy_validate = knn.score(x_validates,y_validate)
 
-        output = {'model': col,
+        output = {'n_neighbors': i,
                  'train_accuracy': accuracy_train,
                  'validate_accuracy': accuracy_validate,
                  }
+        
         metrics.append(output)
-    
+        
+    # create a dataframe
     df = pd.DataFrame(metrics)
     
+    # create a new column for a dataframe with a differance of train accuracy score and validate accuracy score
     df['difference'] = df.train_accuracy - df.validate_accuracy
     
     return df
 
 
+def get_decision_tree(x_trains, x_validates, y_train, y_validate, n):
+    '''get decision tree accuracy score on train and validate data'''
+    
+    # create model
+    clf = DecisionTreeClassifier(max_depth = n, random_state=42)
+
+    # fit the model to train data
+    clf.fit(x_trains, y_train)
+
+    # compute accuracy
+    train_acc = clf.score(x_trains, y_train)
+    validate_acc = clf.score(x_validates, y_validate)
+
+    return train_acc, validate_acc
+
+
+def get_random_forest(x_trains, x_validates, y_train, y_validate, n):
+    '''get random forest accuracy score on train and validate data'''
+    
+    # create model
+    rf= RandomForestClassifier(min_samples_leaf = n, random_state=42) 
+
+    # fit the model to train data
+    rf.fit(x_trains, y_train)
+
+    # compute accuracy
+    train_acc = rf.score(x_trains, y_train)
+    validate_acc = rf.score(x_validates, y_validate)
+
+    return train_acc, validate_acc
+
+
+def get_knn(x_trains, x_validates, y_train, y_validate, n):
+    ''' get KNN accuracy score on train and validate data'''
+    
+    # create model
+    knn= KNeighborsClassifier(n_neighbors = n) 
+
+    # fit the model to train data
+    knn.fit(x_trains, y_train)
+
+    # compute accuracy
+    train_acc = knn.score(x_trains, y_train)
+    validate_acc = knn.score(x_validates, y_validate)
+    
+    return train_acc, validate_acc
 
 
 def get_models_accuracy(X_train, X_val, y_train, y_val):
@@ -251,33 +229,33 @@ def get_models_accuracy(X_train, X_val, y_train, y_val):
 #     baseline_accuracy = mo.get_baseline_accuracy( y_train)
     tree_train_acc, tree_validate_acc= get_decision_tree(X_train, X_val, y_train, y_val, 4)
     random_train_acc, random_validate_acc= get_random_forest(X_train, X_val, y_train, y_val, 7)
-    logistic_train_acc, logistic_validate_acc = get_logistic_regression(X_train, X_val, y_train, y_val, 1)
-    
+    knn_train_acc, knn_validate_acc= get_knn(X_train, X_val, y_train, y_val, 4)    
     # assing index
-    index = ['Decision_Tree(max_depth=4)', 'Random_Forest(min_samples_lead=7)', 'Logistic_Regression(C=1)']
+    index = ['Decision_Tree(max_depth=4)', 'Random_Forest(min_samples_lead=7)', 'KNN (Neighours=4)']
     
     # create a dataframe
-    df = pd.DataFrame({'train_accuracy':[tree_train_acc, random_train_acc, logistic_train_acc],
-                       'validate_accuracy': [tree_validate_acc, random_validate_acc,logistic_validate_acc]},
+    df = pd.DataFrame({'train_accuracy':[tree_train_acc, random_train_acc, knn_train_acc],
+                       'validate_accuracy': [tree_validate_acc, random_validate_acc, knn_validate_acc]},
                           index=index)
     df['difference']= df['train_accuracy']-df['validate_accuracy']
     
     return df
 
+
 def viz_models_accuracy(df):
+   
     '''takes in a dataframe and plot a graph to show comparisons models accuracy score on train and valiadate data'''
-    df.train_accuracy = df.train_accuracy * 100
-    df.validate_accuracy = df.validate_accuracy * 100
-#     plt.figure(figsize=(3,6))
-    ax = df.drop(columns='difference').plot.bar(rot=75)
+    
+    df_1 = df.copy()
+    df_1.train_accuracy = df_1.train_accuracy * 100
+    df_1.validate_accuracy = df_1.validate_accuracy * 100
+    df_1 = df_1.drop(columns='difference')
+    ax = df_1.plot.bar(rot=75)
     ax.spines[['right', 'top']].set_visible(False)
     plt.title("Comparisons of Accuracy")
     plt.ylabel('Accuracy score')
-#     ax.yaxis.set_major_formatter(mtick.PercentFormatter(xmax=1, decimals=None, symbol='%', is_latex=False))
     plt.bar_label(ax.containers[0],fmt='%.0f%%')
     plt.bar_label(ax.containers[1],fmt='%.0f%%')
-    
-
     plt.show()
 
 
@@ -291,45 +269,3 @@ def get_decison_tree_test(x_train, x_test, y_train, y_test,n):
     validate_acc = clf.score(x_test, y_test)
         
     print(validate_acc)
-
-
-
-
-def get_models_accuracy(X_train, X_val, y_train, y_val):
-    '''takes x_trains, y_train, x_validates, y_validate, train, validate, target
-    return dataframe with models and their accuracy score on train and validate data
-    '''
-    # get accuracy
-#     baseline_accuracy = mo.get_baseline_accuracy( y_train)
-    tree_train_acc, tree_validate_acc= get_decision_tree(X_train, X_val, y_train, y_val, 4)
-    random_train_acc, random_validate_acc= get_random_forest(X_train, X_val, y_train, y_val, 7)
-    logistic_train_acc, logistic_validate_acc = get_logistic_regression(X_train, X_val, y_train, y_val, 1)
-    
-    # assing index
-    index = ['Decision_Tree(max_depth=4)', 'Random_Forest(min_samples_lead=7)', 'Logistic_Regression(C=1)']
-    
-    # create a dataframe
-    df = pd.DataFrame({'train_accuracy':[tree_train_acc, random_train_acc, logistic_train_acc],
-                       'validate_accuracy': [tree_validate_acc, random_validate_acc,logistic_validate_acc]},
-                          index=index)
-    df['difference']= df['train_accuracy']-df['validate_accuracy']
-    
-    return df
-
-
-
-def viz_models_accuracy(df):
-    '''takes in a dataframe and plot a graph to show comparisons models accuracy score on train and valiadate data'''
-    df.train_accuracy = df.train_accuracy * 100
-    df.validate_accuracy = df.validate_accuracy * 100
-#     plt.figure(figsize=(3,6))
-    ax = df.drop(columns='difference').plot.bar(rot=75)
-    ax.spines[['right', 'top']].set_visible(False)
-    plt.title("Comparisons of Accuracy")
-    plt.ylabel('Accuracy score')
-#     ax.yaxis.set_major_formatter(mtick.PercentFormatter(xmax=1, decimals=None, symbol='%', is_latex=False))
-    plt.bar_label(ax.containers[0],fmt='%.0f%%')
-    plt.bar_label(ax.containers[1],fmt='%.0f%%')
-    
-
-    plt.show()
