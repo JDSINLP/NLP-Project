@@ -12,7 +12,7 @@ import seaborn as sns
 import json
 # import acquire
 import prepare
-import dev_wrangle as w
+import wrangle as w
 
 from env import github_token, github_username
 import nltk
