@@ -233,10 +233,11 @@ def get_models_accuracy(X_train, X_val, y_train, y_val):
     random_train_acc, random_validate_acc= get_random_forest(X_train, X_val, y_train, y_val, 7)
     knn_train_acc, knn_validate_acc= get_knn(X_train, X_val, y_train, y_val, 4)    
     # assing index
-    index = ['Decision_Tree(max_depth=4)', 'Random_Forest(min_samples_lead=7)', 'KNN (Neighours=4)']
+    index = ['Decision_Tree', 'Random_Forest', 'KNN']
     
     # create a dataframe
-    df = pd.DataFrame({'train_accuracy':[tree_train_acc, random_train_acc, knn_train_acc],
+    df = pd.DataFrame({
+                       'train_accuracy':[tree_train_acc, random_train_acc, knn_train_acc],
                        'validate_accuracy': [tree_validate_acc, random_validate_acc, knn_validate_acc]},
                           index=index)
     df['difference']= df['train_accuracy']-df['validate_accuracy']
@@ -249,13 +250,15 @@ def viz_models_accuracy(df):
     '''takes in a dataframe and plot a graph to show comparisons models accuracy score on train and valiadate data'''
     
     df_1 = df.copy()
-    df_1.train_accuracy = df_1.train_accuracy * 100
     df_1.validate_accuracy = df_1.validate_accuracy * 100
+    df_1.train_accuracy = df_1.train_accuracy * 100
     df_1 = df_1.drop(columns='difference')
-    ax = df_1.plot.bar(rot=75)
+    df_1 = df_1.sort_values(by=['validate_accuracy'], ascending=False)
+    ax = df_1.plot.bar(rot=.5)
+
     ax.spines[['right', 'top']].set_visible(False)
     plt.title("Comparisons of Accuracy")
-    plt.ylabel('Accuracy score')
+    plt.xlabel('Accuracy score')
     plt.bar_label(ax.containers[0],fmt='%.0f%%')
     plt.bar_label(ax.containers[1],fmt='%.0f%%')
     plt.show()
