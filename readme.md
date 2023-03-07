@@ -8,7 +8,7 @@ The goal of the project is to scrape Github Bitcoin repositories and build a mod
 # The Plan
 
 * Acquire data
-    * acquired data by scraping github repos README using the acquire.py script and saved locally as json file.
+    * acquired data as of March 3, 2022 by scraping github repos README using the acquire.py script and saved locally as json file.
     
 * Prepare data
      - bin language into 'Python', 'JavaScript', 'C++', 'Java','Other'
