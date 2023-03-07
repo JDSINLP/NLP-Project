@@ -2,7 +2,7 @@
 
 
 # Project Description
-The goal of the project is to scrape Github Bitcoin repositories and build a model to predict programming language of a repository using the natural language content in README files
+The goal of the project is to scrape Github Bitcoin repositories and build a model to predict programming language of a repository using the natural language content in README files. A link to summarized Canva slides can be found here: https://www.canva.com/design/DAFccDwPXcA/N2HuzVkjXTmxmMnMrd0jJg/edit?utm_content=DAFccDwPXcA&utm_campaign=designshare&utm_medium=link2&utm_source=sharebutton
 
 
 # The Plan
