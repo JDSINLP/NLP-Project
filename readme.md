@@ -2,7 +2,7 @@
 
 
 # Project Description
-The goal of the project is to web scrape Github Bitcon repository and use README files to build a model to predict programming language of a repository.
+The goal of the project is to scrape Github Bitcoin repositories and build a model to predict programming language of a repository using the natural language content in README files. A link to summarized Canva slides can be found here: https://www.canva.com/design/DAFccDwPXcA/N2HuzVkjXTmxmMnMrd0jJg/edit?utm_content=DAFccDwPXcA&utm_campaign=designshare&utm_medium=link2&utm_source=sharebutton
 
 
 # The Plan
@@ -16,25 +16,25 @@ The goal of the project is to web scrape Github Bitcon repository and use README
      - Remove any accented characters, non-ASCII characters
      - Remove special characters.
      - Lemmatize the words.
-     - store the clean text into a column named readme_contetns_clean
+     - store the clean text into a column named readme_contents_clean
      - add columns 
          - readme_contents_clean: contains cleaned readme
-         - length: lenght of clean readme
+         - length: length of clean readme
          - unique: number of unique words in clean readme
      - split data into train, val, and test(approx. 60/20/20)
 
 * Explore Data
-    * Use graph to explore data
+    * Use graphs to explore data
         * What are the most common words in READMEs?
         * Does the length of the README vary by programming language?
         * Do different programming languages use a different number of unique words?
        
 * Develop Model
-    * Isolate a target variables
-    * Set up baseline prediction
-    * Evaluate models on train data and validate data
+    * Isolate target variable
+    * Establish baseline
+    * Evaluate models on train and validate sets
     * Select the best model based on the highest accuracy 
-    * Evaluate the best model on test data to make predictions
+    * Run the best model on test data to make predictions
 
 * Draw Conclusions
 
@@ -50,12 +50,12 @@ The goal of the project is to web scrape Github Bitcon repository and use README
 
 # Steps to Reproduce
 1. Clone this repo  
-2. Update env.py file with github_token and github_usename
+2. Update env.py file with github_token and github_username
 3. Run Notebook
 
 # Takeaways and Conclusions
     
-* Using, npm install, and http user pa were top unigrams, bigrams, and trigams, respectfully. 
+* 'Using', 'npm install', and 'http user pa' were the top unigrams, bigrams and trigams respectively
 * JavaScript had the longest README's
 * Java had most unique word count
 * Bitcoin was not a most common words
@@ -64,4 +64,4 @@ The goal of the project is to web scrape Github Bitcon repository and use README
 # Recommendations & Next Steps
 * Web-scraping takes time, so be patient
 * Scrape many repos to get lots of content
-* With more time we had more time we would scrape more repos, try stemming instead of lemmatizing, and add more stop-words
+* With more time we would scrape more repos, try stemming instead of lemmatizing, and add more stop-words

@@ -9,7 +9,6 @@ from bs4 import BeautifulSoup
 
 import matplotlib.pyplot as plt
 import seaborn as sns
-
 import json
 # import acquire
 import prepare
@@ -257,7 +256,6 @@ def viz_models_accuracy(df):
     df_1 = df_1.sort_values(by=['validate_accuracy'], ascending=False)
     ax = df_1.plot.bar(rot=.5)
     
-  
     baseline_accuracy = 39
     plt.axhline(baseline_accuracy , label="Baseline Accuracy", color='red')
     plt.legend()
@@ -278,6 +276,6 @@ def get_decison_tree_test(x_train, x_test, y_train, y_test,n):
     
     clf.fit(x_train, y_train)
     
-    validate_acc = clf.score(x_test, y_test)
+    test_acc = clf.score(x_test, y_test)
     
-    print(f"validate Accuracy: {round(validate_acc, 2) * 100} %")
+    print(f"Test Accuracy: {round(test_acc, 2) * 100} %")
