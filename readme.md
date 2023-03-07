@@ -50,15 +50,18 @@ The goal of the project is to web scrape Github Bitcon repository and use README
 
 # Steps to Reproduce
 1. Clone this repo  
-2. Run notebook
+2. Update env.py file with github_token and github_usename
+3. Run Notebook
 
 # Takeaways and Conclusions
     
-* 
-* 
-* 
-* 
-* 
+* Using, npm install, and http user pa were top unigrams, bigrams, and trigams, respectfully. 
+* JavaScript had the longest README's
+* Java had most unique word count
+* Bitcoin was not a most common words
+* Decision Tree with max_depth 4 has accuracy score of 65%  on test data beating baseline accuracy score of 39% by  26 %
 
 # Recommendations & Next Steps
-* 
+* Web-scraping takes time, so be patient
+* Scrape many repos to get lots of content
+* With more time we had more time we would scrape more repos, try stemming instead of lemmatizing, and add more stop-words
