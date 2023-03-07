@@ -40,6 +40,7 @@ def train_val_test(df, target=None, stratify=None, seed=42):
 
 
 def get_tfid(X_train, X_val, X_test, y_train, y_val, y_test):
+    ''' get tfid for nlp modeling'''
     
     tfidf = TfidfVectorizer()
     X_train_tfid = tfidf.fit_transform(X_train)
