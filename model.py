@@ -255,12 +255,17 @@ def viz_models_accuracy(df):
     df_1 = df_1.drop(columns='difference')
     df_1 = df_1.sort_values(by=['validate_accuracy'], ascending=False)
     ax = df_1.plot.bar(rot=.5)
-
+    
+    baseline_accuracy = 39
+    plt.axhline(baseline_accuracy , label="Baseline Accuracy", color='red')
+    plt.legend()
+    ax.legend(loc='upper left', bbox_to_anchor=(1, 1))
     ax.spines[['right', 'top']].set_visible(False)
     plt.title("Comparisons of Accuracy")
     plt.ylabel('Accuracy score')
     plt.bar_label(ax.containers[0],fmt='%.0f%%')
     plt.bar_label(ax.containers[1],fmt='%.0f%%')
+    sns.set_theme(style="whitegrid")
     plt.show()
 
 
