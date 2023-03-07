@@ -258,7 +258,7 @@ def viz_models_accuracy(df):
 
     ax.spines[['right', 'top']].set_visible(False)
     plt.title("Comparisons of Accuracy")
-    plt.xlabel('Accuracy score')
+    plt.ylabel('Accuracy score')
     plt.bar_label(ax.containers[0],fmt='%.0f%%')
     plt.bar_label(ax.containers[1],fmt='%.0f%%')
     plt.show()
