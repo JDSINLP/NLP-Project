@@ -271,6 +271,6 @@ def get_decison_tree_test(x_train, x_test, y_train, y_test,n):
     
     clf.fit(x_train, y_train)
     
-    validate_acc = clf.score(x_test, y_test)
+    test_acc = clf.score(x_test, y_test)
     
-    print(f"validate Accuracy: {round(validate_acc, 2) * 100} %")
+    print(f"Test Accuracy: {round(test_acc, 2) * 100} %")
