@@ -28,7 +28,7 @@ df=pd.read_json('data2.json')
 
 #Question 1
 def viz_most_common_unigrams(words):
-    '''takes in words, get top 10 unigram words, plot bar graph of top 5 unigram words'''
+    '''takes in words, get top 5 unigram words, plot bar graph of top 5 unigram words'''
     
     words_unigrams = pd.Series(nltk.ngrams(words.split(), 1))
     top_5_words = words_unigrams.value_counts().head(5)
@@ -47,7 +47,7 @@ def viz_most_common_unigrams(words):
     
 
 def viz_most_common_bigrams(words):
-    '''takes in words, get top 10 bigram words, plot bar graph of top 5 bigram words'''
+    '''takes in words, get top 5 bigram words, plot bar graph of top 5 bigram words'''
     
     words_bigrams = pd.Series(nltk.ngrams(words.split(), 2))
     top_5_words = words_bigrams.value_counts().head(5)
