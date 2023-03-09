@@ -55,8 +55,8 @@ The goal of the project is to scrape Github Bitcoin repositories and build a mod
 
 # Takeaways and Conclusions
     
-* 'Using', 'npm install', and 'http user pa' were the top unigrams, bigrams and trigams respectively
-* JavaScript had the longest README's
+* 'http', 'github com', and 'http github com' were the top unigrams, bigrams and trigams respectively
+* JavaScript had the longest README
 * Java had most unique word count
 * Bitcoin was not a most common words
 * Decision Tree with max_depth 4 has accuracy score of 65%  on test data beating baseline accuracy score of 39% by  26 %
